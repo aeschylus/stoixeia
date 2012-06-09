@@ -1,0 +1,54 @@
+body {
+    background-image: url('paper.jpeg');
+    font-family:Helvetica;
+}
+a:link {
+    color:Teal;
+    font-size: 20px;
+    display:inline-block;
+    margin-bottom:0;
+    text-decoration: none;
+    border:4px solid teal;
+    border-radius:4px;
+    padding: 3px 5px;
+    margin-right:5px;
+    line-height:28px;
+    font-weight:bold;
+}
+a:hover {
+    color: deepPink;
+    border-color: deepPink;
+}
+/* SVG Styling
+/**************/
+
+circle.node {
+  stroke: Linen;
+  stroke-width: 3px;
+  fill: deepskyBlue;
+}
+
+line.link {
+  stroke: deepskyBlue;
+  stroke-opacity: .6;
+  stroke-width: 2;
+}
+
+title {
+    display:block;
+}
+
+#chart {
+    width:940px;
+    margin-top:10px;
+    margin-left:auto;
+    margin-right:auto;
+}
+.irrelevant {
+    opacity: 0.3;
+}
+square {
+    stroke: brown;
+    stroke-width: 2px;
+    fill: maroon;
+   } 
