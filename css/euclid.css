@@ -92,12 +92,11 @@ em {
 
 #info {
     display:none;
-    position:fixed;
+    position:absolute;
     top:0;
     left:0;
     right:0;
     bottom:0;
-    overflow:scroll;
 }
 #infoWrap {
     margin:0 auto;
@@ -157,6 +156,11 @@ line.link {
 
 #chart {
     z-index: -1000;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
 }
 .irrelevant {
     opacity: 0.3;
