@@ -1,5 +1,5 @@
 $(function() {
-
+    
     var width = window.innerWidth, height = window.innerHeight;
     // var width = 940,
     //     height = 600;
@@ -14,7 +14,7 @@ $(function() {
     .distance(200)
     .size([width, height]);
 
-d3.json("euclidData.json", function(json) {
+d3.json("data/euclidData.json", function(json) {
     force
     .nodes(json.nodes)
     .links(json.links)
@@ -96,6 +96,7 @@ function fade(opacity) {
 }
 
 });
+
 $("#infoButton").toggle(
         function() {
             $("#info").stop().fadeIn(800);
@@ -106,4 +107,13 @@ $("#infoButton").toggle(
             $("#chart").stop().fadeTo(400, 1);
             $("#infoButton").removeClass("selected");
         });
+$('html').click(function() {
+    $("#info").stop().fadeOut(400);
+    $("#chart").stop().fadeTo(400, 1);
+    $("#infoButton").removeClass("selected");
+});
+$('#infoWrap').click(function(event){
+    event.stopPropagation();
+});
+
 });

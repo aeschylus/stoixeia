@@ -1,9 +1,9 @@
 import json
 import pprint
 
-JSON_FILE = "euclidData.json"
+JSON_FILE = "data/euclidData.json"
 
-def get_props(filename='propDependencies.json'):
+def get_props(filename='data/propDependencies.json'):
     """
     filename -> dict
     """

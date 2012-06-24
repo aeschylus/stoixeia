@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Force-Directed Layout</title>
+    <script type="text/javascript" src="js/d3.v2.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/euclid.css"/>
+    <meta http-equiv="Content-Type; charset="utf-8">
+  </head>
+  <body>
+    <div id="chart"></div>
+    <a href="#infoWrap" id="infoButton">i</a>
+    <div id="info">
+        <div id="infoWrap">
+            <h1>Dependency Visualization of Euclid's Elements: Book I</h1>
+            <h2>What Is This?</h2>
+            <p>The graph you see represents the dependencies between the propositions in Book I of Euclid's <em>Elements</em>. One of the most important works of mathematics ever written, it systematized all known Geometry (in Greece) at the time it was written, reducing it to its elementary axioms and arranging it into a constructive presentation.</p>
+            <p>The visualization presents the dependency tree of Book I as a force-directed graph which may be filtered to better explore the relative importance and conceptual relatedness of the propsitions.</p>
+            <p>For more information about the book, please consult the wikipedia articles for <a href="http://en.wikipedia.org/wiki/Euclid">Euclid</a> and <a href="http://en.wikipedia.org/wiki/Euclid%27s_Elements"><em>The Elements</em></a>. You may read a hyperlinked translation of the book <a href="http://aleph0.clarku.edu/~djoyce/java/elements/elements.html">here</a>. You may also wish to read the original Ancient Greek text, edited by Heiberg for Teubner, or the classic Thomas Heath translation, at the Perseus Digital Library Project, <a href="http://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0085%3Abook%3D1%3Atype%3DDef%3Anumber%3D1">here</a>. Finally, the 888 C.E. manuscript known as the &ldquo;Bodelean Euclid&rdquo; has been digitized by the Clay Mathematics Institute and can be viewed <a href="http://www.claymath.org/library/historical/euclid/">here</a>.</p>
+            <h2>Interaction</h2>
+            <p>Currently the application allows you to drag the nodes to see how much &ldquo;gravitational&rdquo; impact a given proposition has on the total structure of the argument of Book I. You can also filter out unconnected propositions by hovering the mouse over an item of interest.</p>
+            <h2>Limitations and Known Bugs</h2>
+            <p>This visualization has only been tested in a few modern browsers. Namely recent versions of Chrome, Safari, and Firefox on Mac OS 10.7. In general it requires an SVG-capable (i.e.:NOT Internet Explorer 8 or below), &ldquo;modern&rdquo; browser.</p>
+            <p>The visualization will flicker if you drag a node quickly enough for your mouse to exit the area of the node. This is due to the click-and-drag behavior for force-directed layouts in the d3 visualization library, and will require some tweaking of the source code, which I have not yet completed.</p>
+            <p>The transition between selecting and deselecting nodes is somewhat jarring at present. Fading the opacity would be better, but requires some refactoring that I have not yet completed.</p>
+            <p>Occasionally the graph will spill out of the window. Remain calm and drag it a bit; or otherwise reload the page for a new random set of starting positions.</p>
+            <p>The Graph does not resize with window resizing. I need to modularize the code a bit better to get this to work to my satisfaction.</p>
+            <p>Filtering shows both the dependencies and dependants with the same styling. Obviously it would be preferable to view these separately, or at least have them differentiated somehow, however the data is not well-structured enough at this time to make coding that a pleasurable process. This will also be fixed soon.</p>
+            <p>It's unclear that a force-directed graph is necessarily the most appropriate representation of the data. A hierarchical edge bundling graph or another more hierachically biased schema will be provided for a counterpoint in the future. For now, enjoy playing with the bouncy thing.</p>
+            <h2>Aspirations</h2>
+            <p>The application will eventually serve as an interface to the text of <em>The Elements</em>, while providing many peripheral tools for exploring the diagrams of the propositions and socially curating marginalia to aid the reader on his journey. The initial motivation for this project came from the frustration of reading <em>The Elements</em> on a computer or tablet. The structure of <em>The Elements</em> is highly linear at a superficial level, but anyone who has made a sincere effort to read this work will have recognized its many, highly non-linear threads. When reading the book in folio, it is relatively natural, though still cumbersome, to traverse the pages to retrieve relevant information from a previous section, or to look at a definition more closely. As badly suited as traditional bound books are for non-linear reading, modern eBooks fail abysmally to support any form of non-linear text traversal. The idea with the present adaptation is to construct a pilot project for a reasonable application of technology to the reading experience that genuinely improves upon the bound book. Modern computer interfaces lack a sensitivity to workflow and process. This adaptation seeks to interactively model the cognitive process of reading a book like <em>The Elements</em> while removing all the unncessary page-turning. Contextually relevant information will be organized and displayed automatically in a way that optimizes its consumption, exploration, and synthesis.</p>
+            <p>Some features which will be added very soon are the ability to do &ldquo;deep&rdquo; filters of dependencies, allowing the reader to view dependencies several levels up and down to the beginning and end of the book. Clicking a proposition will generate a reading list from these dependencies so that the rationale for any step in a given proposition will be always at hand. An alternative, hierarchical edge bundling graph of the dependencies will also be added soon. More long-term additions include the ability to make and share marginal notes, track progress through the book, and view and manipulate diagrams.</p>
+            <img src="images/inscription.png" alt="" />
+        </div>
+    </div>
+    <div id="footer"><span>Andrew Keegan</span><span>MMXII</span></div>
+    <script type="text/javascript" src="js/euclid.js"></script>
+  </body>
+</html>
