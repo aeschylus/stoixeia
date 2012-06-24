@@ -105,7 +105,10 @@ em {
 }
 #infoWrap img {
     display:block;
-    margin: 20px auto 60px auto;
+    margin-top: 20px;
+    margin-bottom: 60px;
+    margin-left: auto;
+    margin-right: auto;
 }
 #infoButton {
     color:black;
@@ -165,9 +168,6 @@ line.link {
 .irrelevant {
     opacity: 0.3;
 }
-g {
-  cursor:move;
-  }
 .node text {
   pointer-events: none;
   font-family:"Helvetica Neue";
@@ -176,5 +176,4 @@ g {
   fill: cyan;
   stroke:black;
   stroke-width:1.4;
-  cursor:move;
   }
