@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+    <style type="text/css">
+        html, body {
+            margin:0;
+            padding:0;
+            font-family: "Helvetica Neue";
+        }
+        .propContainer {
+            width:30em;
+            max-width:500px;
+        }
+        h1 { 
+            text-align: center;
+            word-break:hyphenate;
+        }
+        .propColumn {
+            float:left;
+            margin: 0 1em;
+            max-width: 500px;
+        }
+        #columnWrap {
+            width:1100px;
+        }
+        .barFooter {
+            height:60px;
+            width:100%;
+            border-top: 2px solid black;
+            position:fixed;
+            bottom:0;
+            background-color:white;
+        }
+        input[type="range"] {
+            width:250px;
+            height:60px;
+            margin-left:30px;
+            display:block;
+            float:left;
+        }
+        span {
+            float:left;
+            display: block;
+            font-size:1.2em;
+            line-height:54px;
+            padding-left:5px;
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+        <div id="columnWrap">
+            <div id="leftColumn" class="propColumn">
+                <div class="propContainer">
+                    <h1>Proposition 1</h1>
+                    <p>here's a bunch of example textasdfhjsalkdjhfs djf djf sdsdlkljdfhklsjhdf skdfhlysdhfusybdfsbdf ysb dfuysbd fsbd fyusdbf wbf sbd fsubd fsuadybf sbdf f.</p>
+                </div>
+                <div class="propContainer">
+                    <h1>Proposition 2</h1>
+                    <p>here's a bunch of example textasdfhjsalkdjhfs djf djf sdsdlkljdfhklsjhdf skdfhlysdhfusybdfsbdf ysb dfuysbd fsbd fyusdbf wbf sbd fsubd fsuadybf sbdf f.</p>
+                </div>
+                <div class="propContainer">
+                    <h1>Proposition 3</h1>
+                    <p>here's a bunch of example textasdfhjsalkdjhfs djf djf sdsdlkljdfhklsjhdf skdfhlysdhfusybdfsbdf ysb dfuysbd fsbd fyusdbf wbf sbd fsubd fsuadybf sbdf f.</p>
+                </div>
+            </div>
+            <div id="rightColumn" class="propColumn">
+                <div class="propContainer">
+                    <h1>Proposition 1</h1>
+                    <p>here's a bunch of example textasdfhjsalkdjhfs djf djf sdsdlkljdfhklsjhdf skdfhlysdhfusybdfsbdf ysb dfuysbd fsbd fyusdbf wbf sbd fsubd fsuadybf sbdf f.</p>
+                </div>
+                <div class="propContainer">
+                    <h1>Proposition 2</h1>
+                    <p>here's a bunch of example textasdfhjsalkdjhfs djf djf sdsdlkljdfhklsjhdf skdfhlysdhfusybdfsbdf ysb dfuysbd fsbd fyusdbf wbf sbd fsubd fsuadybf sbdf f.</p>
+                </div>
+                <div class="propContainer">
+                    <h1>Proposition 3</h1>
+                    <p>here's a bunch of example textasdfhjsalkdjhfs djf djf sdsdlkljdfhklsjhdf skdfhlysdhfusybdfsbdf ysb dfuysbd fsbd fyusdbf wbf sbd fsubd fsuadybf sbdf f.</p>
+                </div>
+            </div>
+        </div>
+        <div class="barFooter">
+            <input type="range" min="1" max="400" value="100"/>
+            <span id="left"></span>
+            <input type="range" min="1" max="400" value="100"/>
+            <span id="right"></span>
+        </div>
+        <script type="text/javascript">
+            var inputs = document.getElementsByTagName("input");
+            console.log(inputs[0]);
+            // inputs[0].onChange = updateText(this.value);
+            inputs[0].onchange = function() { updateText("left");}
+            inputs[1].onchange = function() { updateText("right");}
+            function updateText(side) {
+                if (side === "left") {
+                val = inputs[0].value;
+                document.getElementById(side).innerText = "font-size: " +  val + "%";
+                document.getElementById(side + "Column").style.fontSize = val + "%";
+                } else {
+                val = inputs[1].value;
+                document.getElementById(side).innerText = "font-size: " + val + "%";
+                document.getElementById(side + "Column").style.fontSize = val + "%";
+                }
+            console.log(val);
+            console.log(side);
+            }
+
+        </script>
+</body>
+</html>

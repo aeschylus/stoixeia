@@ -1,5 +1,5 @@
 $(function() {
-    
+
     var width = window.innerWidth, height = window.innerHeight;
     // var width = 940,
     //     height = 600;
@@ -48,14 +48,6 @@ node.append("text")
 .attr("dy", "-.3em")
 .text(prop); 
 
-
-// var node = svg.selectAll("circle.node")
-// .data(json.nodes)
-// .enter().append("circle")
-// .attr("class", "node")
-// .attr("r", 12)
-// .call(force.drag)
-
 var references = function (d) {return d.propDependencies;};
 
 force.on("tick", function() {
@@ -66,13 +58,18 @@ force.on("tick", function() {
 node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 });
 
+// creates empty object literal 
 var linkedByIndex = {};
+
+// selects the links property of the d3 force layout json property,
+// which is an array, and runs the forEach built-in javascript array method on it, iterating over each.
 json.links.forEach(function(d) {
+
     linkedByIndex[d.source.index + "," + d.target.index] = 1;
 });
 
 function isConnected(a, b) {
-    return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
+    return linkedByIndex[b.index + "," + a.index] || a.index == b.index;
 }
 
 function references(a, b) {
@@ -82,15 +79,22 @@ function referencedBy(a, b) {
 }
 
 function fade(opacity) {
+    // Sets the opacity of the link and node elements based on the value of the "isConnected" function.
     return function(d) {
         node.style("stroke-opacity", function(o) {
+            // Ternary operator syntax in javascript.
+            // Checks the return value of the function.
+            // If true, thisOpacity will equal 1, if false, it will equal the 
+            // supplied opacity value, "o."
             thisOpacity = isConnected(d, o) ? 1 : opacity;
+            // "this" evaluates to the matched node, since this finction is
+            // called as a method on a jQuery or d3 matched set.
             this.setAttribute('fill-opacity', thisOpacity);
             return thisOpacity;
         });
 
         link.style("stroke-opacity", opacity).style("stroke-opacity", function(o) {
-            return o.source === d || o.target === d ? 1 : opacity;
+            return o.target === d ? 1 : opacity;
         });
     };
 }
@@ -99,21 +103,32 @@ function fade(opacity) {
 
 $("#infoButton").toggle(
         function() {
-            $("#info").stop().fadeIn(800);
+            $("#infoContainer").stop().fadeIn(800);
             $("#chart").stop().fadeTo(400, 0.05);
             $("#infoButton").addClass("selected");
         }, function() {
-            $("#info").stop().fadeOut(400);
+            $("#infoContainer").stop().fadeOut(400);
             $("#chart").stop().fadeTo(400, 1);
             $("#infoButton").removeClass("selected");
         });
-$('html').click(function() {
-    $("#info").stop().fadeOut(400);
-    $("#chart").stop().fadeTo(400, 1);
-    $("#infoButton").removeClass("selected");
+
+$('#infoContainer').click(function() {
+    $("#infoButton").click();
 });
+
 $('#infoWrap').click(function(event){
     event.stopPropagation();
 });
 
+var text = {
+    propNumber : 48,
+    dummyElement : "Derpety Derpet Derpety",
+    addProps : function() {
+        for (i=0; i<this.propNumber; i++) {
+            $("<div id='prop"+i+"'>"+this.dummyElement+"</div>").appendTo("body");
+        }
+    }
+}
+
+//text.addProps();
 });

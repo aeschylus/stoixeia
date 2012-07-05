@@ -90,7 +90,7 @@ em {
     font-style:italic;
 }
 
-#info {
+#infoContainer {
     display:none;
     position:absolute;
     top:0;
@@ -123,7 +123,7 @@ em {
     text-decoration: none;
     margin: 10px 30px 0 0 ;
 }
-#infoButton:hover, .selected {
+#infoButton:hover, #infoButton.selected {
     color:lightSeaGreen;
 }
 #footer {
