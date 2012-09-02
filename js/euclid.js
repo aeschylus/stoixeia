@@ -1,3 +1,4 @@
+var depDirection = "down";
 $(function() {
 
     var width = window.innerWidth, height = window.innerHeight;
@@ -20,26 +21,52 @@ d3.json("data/euclidData.json", function(json) {
     .links(json.links)
     .start();
 
-var link = svg.selectAll(".link")
-    .data(json.links)
+var node_drag = d3.behavior.drag()
+    .on("dragstart", dragstart)
+    .on("drag", dragmove)
+    .on("dragend", dragend);
+
+function dragstart(d, i) {
+    force.stop() // stops the force auto positioning before you start dragging
+}
+
+function dragmove(d, i) {
+    d.px += d3.event.dx;
+    d.py += d3.event.dy;
+    d.x += d3.event.dx;
+    d.y += d3.event.dy; 
+    tick(); // this is the key to make it work together with updating both px,py,x,y on d !
+};
+
+function dragend(d, i) {
+    tick();
+    force.resume();
+};
+
+function dragOn() {
+};
+
+    var link = svg.selectAll(".link")
+.data(json.links)
     .enter().append("line")
     .attr("class", "link")
 
     var node = svg.selectAll(".node")
-    .data(json.nodes)
+.data(json.nodes)
     .enter().append("g")
     .attr("class", "node")
     .call(force.drag);
 
-node.on("mouseover", fade(.08)).on("mouseout", fade(1));
-node.append("circle")
+    node.on("mouseover", fade(.08)).on("mouseout", fade(1));
+
+    node.append("circle")
     .attr("x", 0)
     .attr("y", 0)
     .attr("r", 7);
 
-function clipTitle(prop) {
-    return prop.substr(prop.indexOf(".") + 1); 
-}
+    function clipTitle(prop) {
+        return prop.substr(prop.indexOf(".") + 1); 
+    }
 
 var prop = function(d) { return clipTitle(d.prop) };
 
@@ -48,55 +75,82 @@ node.append("text")
 .attr("dy", "-.3em")
 .text(prop); 
 
-var references = function (d) {return d.propDependencies;};
+var dependencies = function (d) {return d.propDependencies;};
 
-force.on("tick", function() {
+force.on("tick", tick);
+
+function tick() {
     link.attr("x1", function(d) { return d.source.x; })
-    .attr("y1", function(d) { return d.source.y; })
-    .attr("x2", function(d) { return d.target.x; })
-    .attr("y2", function(d) { return d.target.y; });
-node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-});
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+}
 
-// creates empty object literal 
+// Creates empty object literal into which we will place an assigned boolean value to each source-target pair.
 var linkedByIndex = {};
 
-// selects the links property of the d3 force layout json property,
-// which is an array, and runs the forEach built-in javascript array method on it, iterating over each.
+// Selects the links property of the d3 force layout json property,
+// Which is an array, and runs the forEach built-in javascript array method on it, iterating over each.
 json.links.forEach(function(d) {
 
     linkedByIndex[d.source.index + "," + d.target.index] = 1;
 });
 
-function isConnected(a, b) {
-    return linkedByIndex[b.index + "," + a.index] || a.index == b.index;
-}
-
 function references(a, b) {
+    return linkedByIndex[a.index + "," + b.index] || b.index == a.index;
 }
 
 function referencedBy(a, b) {
+    return linkedByIndex[b.index + "," + a.index] || a.index == b.index;
 }
 
 function fade(opacity) {
     // Sets the opacity of the link and node elements based on the value of the "isConnected" function.
-    return function(d) {
-        node.style("stroke-opacity", function(o) {
-            // Ternary operator syntax in javascript.
-            // Checks the return value of the function.
-            // If true, thisOpacity will equal 1, if false, it will equal the 
-            // supplied opacity value, "o."
-            thisOpacity = isConnected(d, o) ? 1 : opacity;
-            // "this" evaluates to the matched node, since this finction is
-            // called as a method on a jQuery or d3 matched set.
-            this.setAttribute('fill-opacity', thisOpacity);
-            return thisOpacity;
-        });
+    if ( depDirection === "up" ) {
+        console.log("was up, now:" + depDirection);
+        return function(d) {
+            node.style("stroke-opacity", function(o) {
+                // Ternary operator syntax in javascript.
+                // Checks the return value of the function.
+                // If true, thisOpacity will equal 1, if false, it will equal the 
+                // supplied opacity value, "o."
+                thisOpacity = referencedBy(d, o) ? 1 : opacity;
+                // "this" evaluates to the matched node, since this finction is
+                // called as a method on a jQuery or d3 matched set.
+                this.setAttribute('fill-opacity', thisOpacity);
+                return thisOpacity;
+            });
 
-        link.style("stroke-opacity", opacity).style("stroke-opacity", function(o) {
-            return o.target === d ? 1 : opacity;
-        });
-    };
+            link.style("stroke-opacity", opacity).style("stroke-opacity", function(o) {
+                return o.target === d ? 1 : opacity;
+            });
+        };
+    } else {
+        console.log("was up, now:" + depDirection);
+        return function(d) {
+            node.style("stroke-opacity", function(o) {
+                // Ternary operator syntax in javascript.
+                // Checks the return value of the function.
+                // If true, thisOpacity will equal 1, if false, it will equal the 
+                // supplied opacity value.
+                thisOpacity = references(d, o) ? 1 : opacity;
+                // "this" evaluates to the matched node, since this finction is
+                // called as a method on a jQuery or d3 matched set.
+                this.setAttribute('fill-opacity', thisOpacity);
+                return thisOpacity;
+            });
+
+            link.style("stroke-opacity", opacity).style("stroke-opacity", function(o) {
+                return o.source === d ? 1 : opacity;
+            });
+        };
+    }
+
+}
+
+function showEnunciation() {
+    a = 2;
 }
 
 });
@@ -111,6 +165,15 @@ $("#infoButton").toggle(
             $("#chart").stop().fadeTo(400, 1);
             $("#infoButton").removeClass("selected");
         });
+$("#setDirection").click(
+        function () {
+        console.log(depDirection);
+            if ( depDirection == "up" ) { depDirection = "down";
+                $('.direction').html(depDirection+"2");
+            } 
+            else { depDirection = "up";}
+                $('.direction').html(depDirection);
+        });
 
 $('#infoContainer').click(function() {
     $("#infoButton").click();
@@ -122,7 +185,7 @@ $('#infoWrap').click(function(event){
 
 var text = {
     propNumber : 48,
-    dummyElement : "Derpety Derpet Derpety",
+    dummyElement : "Derpety Derpety Derpety",
     addProps : function() {
         for (i=0; i<this.propNumber; i++) {
             $("<div id='prop"+i+"'>"+this.dummyElement+"</div>").appendTo("body");
