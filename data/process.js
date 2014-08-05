@@ -24,7 +24,7 @@ var elementsXML = fs.readFileSync('euclid.xml', 'utf8', function(){ console.log(
         definitions: null,
         postulates: null,
         commonNotions: null,
-        propositions: null
+        propositions: []
       };
 
       $(book).find('div2[n="Prop"]').find('div3').each(function(index, item) {
@@ -51,7 +51,7 @@ var elementsXML = fs.readFileSync('euclid.xml', 'utf8', function(){ console.log(
           };
         }
 
-        bookObj[item.attr('id')] = prop;
+        bookObj.propositions.push(prop);
       });
 
       elements.push(bookObj);
