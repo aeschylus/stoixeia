@@ -1,9 +1,9 @@
 import json
 import pprint
 
-JSON_FILE = "data/euclidData.json"
+JSON_FILE = "data/euclidsElementsNodesAndLinks.json"
 
-def get_props(filename='data/propDependencies.json'):
+def get_props(filename='data/euclidElementsDeps.json'):
     """
     filename -> dict
     """
@@ -22,15 +22,15 @@ def make_index(nodes):
 
 def result(node, dep, index):
     data = get_props()
-    index = make_index(data['nodes'])
+    index = make_index(data[0])
     return {"source": index[node['prop']],
             "target": index[dep] }
 
 def generate_links():
     data = get_props()
-    index = make_index(data['nodes']) # prop -> index
+    index = make_index(data[0]) # prop -> index
     links = []
-    for node in data['nodes']:
+    for node in data[0]:
         for dep in node['propDependencies']:
             links.append(result(node, dep, index))
     data['links'] = links
