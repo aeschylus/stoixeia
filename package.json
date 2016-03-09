@@ -1,0 +1,23 @@
+{
+  "name": "stoixeia",
+  "version": "1.0.0",
+  "description": "A visualisation of euclid's elements.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aeschylus/stoixeia.git"
+  },
+  "author": "aeschylus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aeschylus/stoixeia/issues"
+  },
+  "homepage": "https://github.com/aeschylus/stoixeia#readme",
+  "devDependencies": {
+    "keymaster": "^1.6.2",
+    "xml2js": "^0.4.16"
+  }
+}
