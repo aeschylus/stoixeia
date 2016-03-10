@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/aeschylus/stoixeia#readme",
   "devDependencies": {
+    "flowtype": "^1.0.0",
     "keymaster": "^1.6.2",
     "xml2js": "^0.4.16"
   }

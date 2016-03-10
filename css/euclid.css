@@ -135,12 +135,15 @@ em {
   left:0;
   right:0;
   bottom:0;
+  z-index: 50;
+  pointer-events: none;
 }
 #infoWrap {
   margin:0 auto;
   width:50%;
   max-width:600px;
   padding-bottom:60px;
+  z-index: 50;
 }
 #infoWrap img {
   display:block;
@@ -196,7 +199,6 @@ line.link {
 }
 
 #chart {
-  z-index: 1000;
   position:fixed;
   top:0;
   left:0;
@@ -211,9 +213,10 @@ line.link {
   font-family:"Optima";
   font-size: 1.5em;
   font-weight:bold;
-  fill: cyan;
-  stroke:black;
-  stroke-width:1.4;
+  paint-order: stroke;
+  fill: black;
+  stroke: white;
+  stroke-width:4;
 }
 text.hairball {
   
@@ -225,42 +228,27 @@ text.overview {
   stroke-width: 5;
   text-anchor: end;
 }
-.book1 {
-  fill: cyan;
+text.bookTitle {
+  font-size: 3em;
+  font-family:"Optima";
+  fill: black;
+  text-anchor: middle;
 }
-.book2 {
-  fill: orangered;
+.focusedProp {
+  width: 65%;
+  height:100%;
+  overflow: scroll;
+  position:absolute;
+  right:0;
+  background:white;
+  z-index:50;
+  font-family:"Optima";
 }
-.book3 {
-  fill: green;
-}
-.book4 {
-  fill: tan;
-}
-.book5 {
-  fill: deeppink;
-}
-.book6 {
-  fill: magenta;
-}
-.book7 {
-  fill: yellow;
-}
-.book8 {
-  fill: marigold;
-}
-.book9 {
-  fill: salmon;
-}
-.book10 {
-  fill: purple;
-}
-.book11 {
-  fill: brown;
-}
-.book12 {
-  fill: blue;
-}
-.book13 {
-  fill: pink;
+.requiredProps {
+  font-family:"Optima";
+  float:left;
+  width:35%;
+  clear: both
+  background:white;
+  z-index:50;
 }
