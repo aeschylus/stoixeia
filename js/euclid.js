@@ -57,7 +57,7 @@ $(function() {
     hairballLayout(nodes,connections);
   });
 
-  function hairballLayout() {
+  function hairballLayout(nodes, connections) {
     nodes.forEach(function(node) {
       node.x = undefined;
       node.y = undefined;
@@ -146,7 +146,7 @@ $(function() {
     }
   }
 
-  function columnLayout() {
+  function columnLayout(nodes, connections) {
     force.stop();
 
     nodes.forEach(function(node) {
@@ -250,11 +250,11 @@ $(function() {
     'h': function() { console.log('H'); },
     'right': function() {
       currentLayout = columnLayout;
-      currentLayout();
+      currentLayout(nodes, connections);
     },
     'left': function() {
       currentLayout = hairballLayout;
-      currentLayout();
+      currentLayout(nodes, connections);
     }
   };
 
@@ -263,14 +263,8 @@ $(function() {
   });
 
   function focusProposition(node) {
-    // console.log('focusing');
-    // console.log(this);
-    // console.log(node);
   }
   function unfocusProposition(node) {
-    console.log('unfocusing');
-    console.log(this);
-    console.log(node);
   }
 
   $("#infoButton").toggle(
