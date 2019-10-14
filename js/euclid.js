@@ -129,7 +129,6 @@ $(function() {
             var isDependency = d.propDependencies.filter(function(dep){
               return o.prop === dep;
             });
-            console.log(isDependency);
             return o.prop === d.prop || isDependency.length > 0;
           })
           .style("stroke-opacity", 1)
@@ -226,27 +225,118 @@ $(function() {
     interpolateZoom([view.x, view.y], view.k);
   }
 
+  function next() {
+    return nodes[focusedProposition + 1];
+  }
+
+  function prev() {
+    return nodes[focusedProposition - 1];
+  }
+
   function displayProp(e) {
+
+    focusedProposition = e.index;
     // console.log(e);
     // console.log(propositions[e.prop]);
 
-    // $('<div>').addClass('focusedProp').html(propositions[e.prop].text).prependTo('body');
-    // $('.focusedProp').flowtype({
-    //   fontRatio:30
-    // });
+    // selectedProposition
+    // should be in the main position
+    // Its dependencies to the left
+    // Moving left causes the selectedProposition
+    // to slide right out of frame
+    // the new selected proposition slides right
+    // into the main position and grows to the
+    // height of the main position.
+    // the other propositions move out of frame to the left
+    // unless they are also dependencies, in which case
+    // they move into their new positions in the left column
+    // new dependencies slide in from the left.
+    // moving right restores the previous proposition to the center
+    // area, and the selected proposition shrinks back into its place
+    // before it was originally selected.
+    // Old selectedProposition
+    // old dependencies
+    // new dependencies
 
-    // e.propDependencies.forEach(function(propId) {
-    //   $('<div>').addClass('requiredProps').html(propositions[propId].text).prependTo('body');
-    //   $('.requiredProps').flowtype({
-    //     fontRatio:30
-    //   });
-    // });
+    var history = []; // the focused propositions in order of visitation
+
+    console.log(e);
+    var selected = propositions[e.prop];
+    var deps = e.propDependencies.map(function(dep){
+      console.log(dep);
+      return propositions[dep];
+    });
+
+    var main = d3.select('body').selectAll('.focusedProp')
+          .data([selected], function(d) { return d; })
+          .html(function(d){
+            return d.text;
+          });
+
+    main
+      .enter()
+      .append('div')
+      .attr('class', 'focusedProp')
+      .html(function(d){
+        return d.text;
+      })
+      .style('top', 1700)
+      .transition()
+      .duration(600)
+      .style('top', 0);
+
+    main.exit()
+      .transition()
+      .duration(300)
+      .style('top', '200px')
+      .style('opacity', 0)
+      .remove();
+
+    if (d3.select('.requiredPropContainer').empty()) {
+      d3.select('body').append('div')
+        .attr('class', 'requiredPropContainer');
+    }
+
+    var dependencies = d3.select('.requiredPropContainer').selectAll('.requiredProp')
+          .data(deps, function(d) { console.log(d); return d.id; })
+          .html(function(d) {
+            return d.text;
+          });
+
+    dependencies.enter()
+      .append('div')
+      .attr('class', 'requiredProp')
+      .html(function(d) {
+        return d.text;
+      })
+      .transition()
+      .duration(500)
+      .style('opacity', 1);
+
+    dependencies.exit()
+      .transition()
+      .duration(500)
+      .style('opacity', 0)
+      .remove();
+
+    $('.focusedProp').flowtype({
+      fontRatio: 30
+    });
+    $('.requiredProp').flowtype({
+      fontRatio: 25
+    });
   }
 
   var eventMappings = {
-    'l': function() { console.log('L'); },
-    'k': function() { console.log('K'); },
-    'j': function() { console.log('J'); },
+    'j': function() {
+      console.log('L');
+      displayProp(next());
+    },
+    'k': function() {
+      console.log('K');
+      displayProp(prev());
+    },
+    'l': function() { console.log('J'); },
     'h': function() { console.log('H'); },
     'right': function() {
       currentLayout = columnLayout;
@@ -267,23 +357,23 @@ $(function() {
   function unfocusProposition(node) {
   }
 
-  $("#infoButton").toggle(
-    function() {
-      $("#infoContainer").stop().fadeIn(800);
-      $("#chart").stop().fadeTo(400, 0.05);
-      $("#infoButton").addClass("selected");
-    }, function() {
-      $("#infoContainer").stop().fadeOut(400);
-      $("#chart").stop().fadeTo(400, 1);
-      $("#infoButton").removeClass("selected");
-    });
+  // $("#infoButton").toggle(
+  //   function() {
+  //     $("#infoContainer").stop().fadeIn(800);
+  //     $("#chart").stop().fadeTo(400, 0.05);
+  //     $("#infoButton").addClass("selected");
+  //   }, function() {
+  //     $("#infoContainer").stop().fadeOut(400);
+  //     $("#chart").stop().fadeTo(400, 1);
+  //     $("#infoButton").removeClass("selected");
+  //   });
 
-  $('#infoContainer').click(function() {
-    $("#infoButton").click();
-  });
+  // $('#infoContainer').click(function() {
+  //   $("#infoButton").click();
+  // });
 
-  $('#infoWrap').click(function(event){
-    event.stopPropagation();
-  });
+  // $('#infoWrap').click(function(event){
+  //   event.stopPropagation();
+  // });
 
 });

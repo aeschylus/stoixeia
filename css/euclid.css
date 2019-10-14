@@ -114,20 +114,6 @@ em {
   border:3px solid black;
   float:left;
 }
-#dependencies {
-  margin-left:300px;
-  margin:0;
-  width:600px;
-  height:100%;
-  background:rgba(0,0,0,.6);
-}
-#focus {
-  margin-left:900px;
-  margin:0;
-  width:800px;
-  height:100%;
-  background:rgba(0,0,0,.3);
-}
 #infoContainer {
   display:none;
   position:absolute;
@@ -237,18 +223,29 @@ text.bookTitle {
 .focusedProp {
   width: 65%;
   height:100%;
-  overflow: scroll;
-  position:absolute;
+  overflow-y: scroll;
+  overflow-x: wrap;
+  position:fixed;
   right:0;
+  top:0;
   background:white;
   z-index:50;
   font-family:"Optima";
+  padding: 20px;
 }
-.requiredProps {
+.requiredProp {
+  padding: 15px 0;
+}
+.requiredPropContainer {
   font-family:"Optima";
-  float:left;
+  position: fixed;
+  left:0;
   width:35%;
-  clear: both
   background:white;
   z-index:50;
+  padding: 20px;
+  top:0;
+  height:100%;
+  overflow-y: scroll;
+  overflow-x: wrap;
 }

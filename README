@@ -1,0 +1,57 @@
+## This is Euclid's _Elements_ (or _στοιχεια_).
+It is structured to be read on various computing devices in a way that is easier that a printed book.
+
+## Data
+The complete text is available as a set of structured entities in several pre-computed arrangements. There are several layers of the text hierarchy that the data exposes to the programmer:
+
+### Book
+### Definition
+### Postulate
+### Common Notion
+### Proposition
+### Lemma
+### Enunciation
+### Construction
+### Exposition
+### Recapitulation
+### Statement
+### Point
+### Line
+### Plane
+### Circle
+### Arc
+### Polygon
+### Angle
+### Solid
+### Solid Angle
+### Ratio
+### Compound Ratio
+### Figure
+
+## Rendering Contexts
+### Proposition View
+### Statement Stepping View
+### Reference View
+### Book-level View
+### Connection View by Book
+### Connection View by Proposition Heap
+### Whole-book View
+### Inter-book View
+
+## Control Contexts
+### Keyboard
+### Touch
+### Console Controller
+### Mouse
+
+## Actions
+### Sequential
+#### Advance to next proposition
+#### Go back to previous Proposition
+#### Advance to next statement
+#### Go back to previous Statement
+#### Advance to next section/book
+#### Go back to previous section/book
+### Hierarchical 
+### Lateral
+### Aspectual
